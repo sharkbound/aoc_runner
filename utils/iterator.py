@@ -70,7 +70,12 @@ def flatten(iterable, depth=None, transform_items=lambda x: x, result_transform=
 
 
 def map_inner_elements(iterable, transform_item, result_transform=None):
-    return (result_transform if result_transform is not None else type(iterable))(map(transform_item, iterable))
+    result_transform_func = (
+        result_transform
+        if result_transform is not None
+        else type(iterable)
+    )
+    return result_transform_func(map(transform_item, iterable))
 
 
 def get_all_ints(value, transform=iter):
