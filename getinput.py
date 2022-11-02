@@ -3,7 +3,7 @@ import requests
 from utils import ask_int, create_day_input_file_path
 
 ADVENT_OF_CODE_URL = 'https://www.adventofcode.com/'
-ADVENT_OF_CODE_INPUT_URL = f'{ADVENT_OF_CODE_URL}/2021/day/{{day}}/input'
+ADVENT_OF_CODE_INPUT_URL = f'{ADVENT_OF_CODE_URL}/{{year}}/day/{{day}}/input'
 
 
 def read_session():
@@ -11,9 +11,9 @@ def read_session():
         return file.read().strip()
 
 
-def get(day):
+def get(year, day):
     return requests.get(
-        ADVENT_OF_CODE_INPUT_URL.format(day=day),
+        ADVENT_OF_CODE_INPUT_URL.format(day=day, year=year),
         cookies={
             'User-Agent': 'advent-of-code-input-fetcher',
             'session': read_session()
@@ -21,8 +21,9 @@ def get(day):
     )
 
 
+year = ask_int('enter year to fetch input for: ')
 day = ask_int('enter day to fetch input for: ')
-data = get(day)
+data = get(year, day)
 data.raise_for_status()
 
 create_day_input_file_path(day).write_text(data.text)
