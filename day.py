@@ -86,7 +86,6 @@ def run_day(day, part, *, timed=False):
     day_to_run: Optional[Day] = None
 
     if not day_py_file.exists():
-        print(f'=============  DAY NOT FOUND: {day_py_file}, CWD: {Path.cwd()} ===================')
         raise MissingDayFileError(day, part, day_py_file)
 
     module = import_module(f'days.day_{day}.{day_py_file.name.replace(".py", "")}')
